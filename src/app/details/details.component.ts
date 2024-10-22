@@ -4,16 +4,18 @@ import { ActivatedRoute } from '@angular/router';
 import { HousingLocation } from '../housing-location';
 import { HousingService } from '../housing.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { switchMap } from 'rxjs/operators'; // Import RxJS operators for chaining
+
 @Component({
   selector: 'app-details',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
   <article>
-    <img class="listing-photo"[src]="housingLocation?.photo" alt="">
+    <img class="listing-photo" [src]="housingLocation?.photo" alt="">
     <section class="listing-description">
       <h2 class="listing-heading">{{housingLocation?.name}}</h2>
-      <p class="listing-location">{{housingLocation?.city}},{{housingLocation?.state}}</p>
+      <p class="listing-location">{{housingLocation?.city}}, {{housingLocation?.state}}</p>
     </section>
     <section class="listing-features">
       <h2 class="section-heading">About this location</h2>
@@ -31,7 +33,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
           <input type="text" id="last-name" formControlName="lastName">
           <label for="email">Email</label>
           <input type="email" id="email" formControlName="email">
-          <button type="submit" class="primary" >Apply now</button>
+          <button type="submit" class="primary">Apply now</button>
         </form>
       </section>
     </section>
@@ -41,20 +43,23 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class DetailsComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
-  housingService = inject(HousingService)
+  housingService = inject(HousingService);
   housingLocation: HousingLocation | undefined;
-  applyForm = new FormGroup ({
+  applyForm = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
     email: new FormControl('')
-  })
+  });
+
   constructor() {
-    const housingLocationId = Number(this.route.snapshot.params["id"])
-    this.housingService.getHousingLocationById(housingLocationId).then(housingLocation => {
+    const housingLocationId = Number(this.route.snapshot.params['id']);
+    
+    this.housingService.getHousingLocationById(housingLocationId).subscribe(housingLocation => {
       this.housingLocation = housingLocation;
-    })
+    });
   }
-  submitApplication(){
+
+  submitApplication() {
     this.housingService.submitApplication(
       this.applyForm.value.firstName ?? '',
       this.applyForm.value.lastName ?? '',
