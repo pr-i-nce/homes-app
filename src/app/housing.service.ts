@@ -5,8 +5,8 @@ import { HousingLocation } from './housing-location';
   providedIn: 'root'
 })
 export class HousingService {
-  url = 'https://pr-i-nce.github.io/homes-json-data/db.json/locations';
-  applicationUrl = 'https://pr-i-nce.github.io/homes-json-data/db.json/applications'; 
+  url = 'https://homes-json-data.onrender.com/locations';
+  applicationUrl = 'https://homes-json-data.onrender.com/applications'; 
 
   constructor() { }
 
