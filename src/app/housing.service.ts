@@ -5,8 +5,8 @@ import { HousingLocation } from './housing-location';
   providedIn: 'root'
 })
 export class HousingService {
-  url = 'http://localhost:3000/locations';
-  applicationUrl = 'http://localhost:3000/applications'; 
+  url = 'https://pr-i-nce.github.io/homes-json-data/db.json/locations';
+  applicationUrl = 'https://pr-i-nce.github.io/homes-json-data/db.json/applications'; 
 
   constructor() { }
 
